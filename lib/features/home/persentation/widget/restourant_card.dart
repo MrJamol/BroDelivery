@@ -21,6 +21,8 @@ class FoodCardWidget extends StatelessWidget {
           final List<int> prepTime = restaurantData[3];
           final List<String> categories = restaurantData[4];
           final String imagePath = restaurantData[5];
+          final String description = restaurantData[6];
+          final int price = restaurantData[7];
 
           return Padding(
             padding: const EdgeInsets.all(8.0),
@@ -31,7 +33,7 @@ class FoodCardWidget extends StatelessWidget {
               freeDelivery: freeDelivery,
               prepTime: prepTime,
               categories: categories,
-              imagePath: imagePath,
+              imagePath: imagePath, price: price, description: description,
             ),
           );
         }).toList(),
@@ -44,6 +46,8 @@ class RestaurantCard extends StatefulWidget {
   final String restaurantName;
   final double stars;
   final int reviews;
+  final int price;
+  final String description;
   final bool freeDelivery;
   final List<int> prepTime;
   final List<String> categories;
@@ -57,7 +61,7 @@ class RestaurantCard extends StatefulWidget {
     required this.freeDelivery,
     required this.prepTime,
     required this.categories,
-    required this.imagePath,
+    required this.imagePath, required this.price, required this.description,
   });
 
   @override
@@ -75,6 +79,8 @@ class _RestaurantCardState extends State<RestaurantCard> {
           context,
           MaterialPageRoute(
             builder: (context) => DetailScreen(
+              price: widget.price,
+              description: widget.description,
               restaurantName: widget.restaurantName,
               stars: widget.stars,
               reviews: widget.reviews,

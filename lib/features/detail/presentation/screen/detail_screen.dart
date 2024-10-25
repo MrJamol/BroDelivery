@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:food_delivery/core/constants/colors/app_colors.dart';
 import 'package:food_delivery/features/detail/presentation/bloc/detail_bloc.dart';
 import 'package:food_delivery/features/detail/presentation/bloc/detail_state.dart';
 import 'package:food_delivery/features/detail/presentation/widget/add_ones.dart';
@@ -10,6 +11,8 @@ class DetailScreen extends StatefulWidget {
   final String imagePath;
   final double stars;
   final int reviews;
+  final int price;
+  final String description;
   final bool freeDelivery;
   final List<int> prepTime;
   final List<String> categories;
@@ -23,6 +26,8 @@ class DetailScreen extends StatefulWidget {
     required this.freeDelivery,
     required this.prepTime,
     required this.categories,
+    required this.price,
+    required this.description,
   });
 
   @override
@@ -126,13 +131,43 @@ class _DetailScreenState extends State<DetailScreen> {
                                   color: Colors.orange, size: 20),
                               Text('${widget.stars} (${widget.reviews})',
                                   style: const TextStyle(color: Colors.grey)),
-                              const Spacer(),
                               TextButton(
+                                style: ButtonStyle(),
                                 onPressed: () {},
-                                child: const Text('See Review'),
+                                child: Text(
+                                  'See Review',
+                                  style: TextStyle(
+                                      color: AppColors.instance.kPrimary),
+                                ),
                               )
                             ],
                           ),
+                          // Price
+                          Row(
+                            children: [
+                              Text(
+                                '\$',
+                                style: TextStyle(
+                                    color: AppColors.instance.kPrimary),
+                              ),
+                              Text(
+                                '${widget.price}', // Display price
+                                style: TextStyle(
+                                    fontSize: 30,
+                                    fontWeight: FontWeight.bold,
+                                    color: AppColors.instance.kPrimary),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(
+                              height: 8), // Space between price and description
+                          // Description
+                          Text(
+                            widget.description, // Display description
+                            style: const TextStyle(
+                                fontSize: 16, color: Colors.black87),
+                          ),
+                          const SizedBox(height: 16),
                           // Free Delivery Info
                           Text(
                             widget.freeDelivery
