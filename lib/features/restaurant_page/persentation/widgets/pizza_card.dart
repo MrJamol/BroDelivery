@@ -103,7 +103,7 @@ class _PizzaCardState extends State<PizzaCard> {
               ),
             ),
             Positioned(
-              bottom: 60,
+              bottom: 70,
               left: 10,
               child: Container(
                 padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
