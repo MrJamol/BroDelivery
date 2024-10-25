@@ -36,6 +36,7 @@ class DetailScreen extends StatefulWidget {
 
 class _DetailScreenState extends State<DetailScreen> {
   bool isHeartFilled = false; // Heart state (unfilled by default)
+  int quantity = 1; // State variable for quantity
 
   @override
   Widget build(BuildContext context) {
@@ -52,8 +53,7 @@ class _DetailScreenState extends State<DetailScreen> {
                     // Container to properly position the image with padding
                     Container(
                       padding: const EdgeInsets.symmetric(
-                          vertical: 40,
-                          horizontal: 16), // Add horizontal padding
+                          vertical: 40, horizontal: 16),
                       child: Stack(
                         children: [
                           ClipRRect(
@@ -142,7 +142,7 @@ class _DetailScreenState extends State<DetailScreen> {
                               )
                             ],
                           ),
-                          // Price
+                          // Price and Quantity Control
                           Row(
                             children: [
                               Text(
@@ -151,11 +151,63 @@ class _DetailScreenState extends State<DetailScreen> {
                                     color: AppColors.instance.kPrimary),
                               ),
                               Text(
-                                '${widget.price}', // Display price
+                                '${widget.price}', // Display total price
                                 style: TextStyle(
                                     fontSize: 30,
                                     fontWeight: FontWeight.bold,
                                     color: AppColors.instance.kPrimary),
+                              ),
+
+                              Spacer(), // Space between price and quantity controls
+                              // Minus Button
+                              GestureDetector(
+                                onTap: () {
+                                  setState(() {
+                                    if (quantity > 1) {
+                                      quantity--; // Decrease quantity
+                                    }
+                                  });
+                                },
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    color: AppColors.instance.white,
+                                    border: Border.all(
+                                        color: AppColors.instance.kPrimary,
+                                        width: 2), // Set border color here
+                                    shape: BoxShape.circle,
+                                  ),
+                                  padding: const EdgeInsets.all(10),
+                                  child: Icon(
+                                    Icons.remove,
+                                    color: AppColors.instance
+                                        .kPrimary, // Change icon color if desired
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(width: 8), // Space between buttons
+                              Text(
+                                '$quantity',
+                                style: TextStyle(fontSize: 25),
+                              ),
+                              const SizedBox(width: 8), // Space between buttons
+                              // Plus Button
+                              GestureDetector(
+                                onTap: () {
+                                  setState(() {
+                                    quantity++; // Increase quantity
+                                  });
+                                },
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    color: AppColors.instance.kPrimary,
+                                    shape: BoxShape.circle,
+                                  ),
+                                  padding: const EdgeInsets.all(10),
+                                  child: Icon(
+                                    Icons.add,
+                                    color: AppColors.instance.white,
+                                  ),
+                                ),
                               ),
                             ],
                           ),

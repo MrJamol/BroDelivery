@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:food_delivery/core/constants/colors/app_colors.dart';
 import 'package:food_delivery/features/detail/presentation/screen/detail_screen.dart';
 import 'package:food_delivery/features/home/persentation/widget/restourant_list.dart';
+import 'package:food_delivery/features/restaurant_page/persentation/screen/restaurnat_screen.dart';
 
 class FoodCardWidget extends StatelessWidget {
   const FoodCardWidget({super.key});
@@ -78,17 +79,18 @@ class _RestaurantCardState extends State<RestaurantCard> {
          Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => DetailScreen(
-              price: widget.price,
-              description: widget.description,
-              restaurantName: widget.restaurantName,
-              stars: widget.stars,
-              reviews: widget.reviews,
-              freeDelivery: widget.freeDelivery,
-              prepTime: widget.prepTime,
-              categories: widget.categories,
-              imagePath: widget.imagePath,
-            ),
+            builder: (context) => RestaurantScreen(),
+            // DetailScreen(
+            //   price: widget.price,
+            //   description: widget.description,
+            //   restaurantName: widget.restaurantName,
+            //   stars: widget.stars,
+            //   reviews: widget.reviews,
+            //   freeDelivery: widget.freeDelivery,
+            //   prepTime: widget.prepTime,
+            //   categories: widget.categories,
+            //   imagePath: widget.imagePath,
+            // ),
           ),
         );
       },
