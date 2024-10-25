@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:food_delivery/features/detail/presentation/bloc/detail_bloc.dart';
+import 'package:food_delivery/features/detail/presentation/screen/detail_screen.dart';
 import 'package:food_delivery/features/home/persentation/bloc/home_bloc.dart';
 import 'package:food_delivery/features/home/persentation/screen/home_screen.dart';
 import 'package:food_delivery/features/profile/persentation/bloc/profile_bloc.dart';
@@ -16,7 +18,8 @@ class MyApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (_) => HomeBloc()),
-        BlocProvider(create: (_) => ProfileBloc())
+        BlocProvider(create: (_) => ProfileBloc()),
+        BlocProvider(create: (_) => ItemDetailBloc())
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
@@ -25,7 +28,7 @@ class MyApp extends StatelessWidget {
           primarySwatch: Colors.blue,
           visualDensity: VisualDensity.adaptivePlatformDensity,
         ),
-        home: HomeScreen(),
+        home: const DetailScreen(),
       ),
     );
   }
