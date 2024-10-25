@@ -1,10 +1,10 @@
-// screens/restaurant_screen.dart
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../bloc/restaurant_bloc.dart';
-import '../bloc/restaurant_event.dart';
-import '../bloc/restaurant_state.dart';
-import '../widgets/pizza_card.dart';
+import 'package:food_delivery/features/restaurant_page/persentation/bloc/restaurant_bloc.dart';
+import 'package:food_delivery/features/restaurant_page/persentation/bloc/restaurant_event.dart';
+import 'package:food_delivery/features/restaurant_page/persentation/bloc/restaurant_state.dart';
+import 'package:food_delivery/features/restaurant_page/persentation/widgets/mcdonalds_menu.dart';
+import 'package:food_delivery/features/restaurant_page/persentation/widgets/pizza_card.dart';
 
 class RestaurantScreen extends StatelessWidget {
   @override
@@ -26,7 +26,7 @@ class RestaurantScreen extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.all(16.0),
               child: Text(
-                '80 types of pizza',
+                'McDonald\'s Menu',
                 style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
               ),
             ),
@@ -36,25 +36,20 @@ class RestaurantScreen extends StatelessWidget {
                 return _buildSortBy(context, state.sortBy);
               },
             ),
-            // List of Pizzas (Hardcoded)
+            // List of McDonald's Products (Dynamic)
             Expanded(
               child: ListView(
-                children: [
-                  PizzaCard(
-                    image: 'assets/images/pizza1.png',
-                    price: 10.35,
-                    name: 'Chicken Hawaiian',
-                    description: 'Chicken, Cheese and Pineapple',
-                    rating: 4.5,
-                  ),
-                  PizzaCard(
-                    image: 'assets/images/pizza2.png',
-                    price: 10.35,
-                    name: 'Vegetarian Pizza',
-                    description: 'Tomatoes, Mushrooms, Peppers',
-                    rating: 4.5,
-                  ),
-                ],
+                children: McDonaldsMenu.products.entries.map((entry) {
+                  final productName = entry.key;
+                  final productDetails = entry.value;
+                  return PizzaCard(
+                    image: productDetails[1],
+                    price: productDetails[0],
+                    name: productDetails[2],
+                    description: productDetails[3],
+                    rating: productDetails[4],
+                  );
+                }).toList(),
               ),
             ),
           ],

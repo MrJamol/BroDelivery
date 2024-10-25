@@ -1,17 +1,17 @@
 class McDonaldsMenu {
   static Map<String, List<dynamic>> products = {
     'Big Mac': [
-      5.69, 
-      'assets/images/big_mac.png', 
-      'Big Mac', 
+      5.69,
+      'assets/images/big_mac.jpg',
+      'Big Mac',
       'Beef patty, lettuce, cheese, pickles, onions, sesame seed bun',
-      4.5, 
-      120, 
+      4.5,
+      120,
       'The iconic Big Mac is made with two beef patties, special sauce, lettuce, cheese, pickles, and onions on a sesame seed bun.', // Description
     ],
     'French Fries': [
       2.99,
-      'assets/images/french_fries.png',
+      'assets/images/french_fries.jpg',
       'French Fries',
       'Potatoes, salt, oil',
       4.7,
@@ -20,7 +20,7 @@ class McDonaldsMenu {
     ],
     'McChicken': [
       4.19,
-      'assets/images/mcchicken.png',
+      'assets/images/mcchicken.jpg',
       'McChicken',
       'Chicken patty, lettuce, mayonnaise, bun',
       4.3,
@@ -29,7 +29,7 @@ class McDonaldsMenu {
     ],
     'Filet-O-Fish': [
       4.49,
-      'assets/images/filet_o_fish.png',
+      'assets/images/filet_o_fish.jpg',
       'Filet-O-Fish',
       'Fish fillet, tartar sauce, cheese, bun',
       4.1,
@@ -38,7 +38,7 @@ class McDonaldsMenu {
     ],
     'McFlurry': [
       3.49,
-      'assets/images/mcflurry.png',
+      'assets/images/mcflurry.jpg',
       'McFlurry',
       'Ice cream, mixed toppings',
       4.6,
@@ -47,7 +47,7 @@ class McDonaldsMenu {
     ],
     'Apple Pie': [
       1.29,
-      'assets/images/apple_pie.png',
+      'assets/images/apple_pie.jpg',
       'Apple Pie',
       'Apples, cinnamon, pastry crust',
       4.4,
@@ -56,7 +56,7 @@ class McDonaldsMenu {
     ],
     'Happy Meal': [
       4.99,
-      'assets/images/happy_meal.png',
+      'assets/images/happy_meal.jpg',
       'Happy Meal',
       'Choice of burger or nuggets, fries, drink, toy',
       4.8,
@@ -65,7 +65,7 @@ class McDonaldsMenu {
     ],
     'Soft Drink': [
       1.89,
-      'assets/images/soft_drink.png',
+      'assets/images/soft_drink.jpg',
       'Soft Drink',
       'Carbonated beverage',
       4.5,
@@ -74,7 +74,7 @@ class McDonaldsMenu {
     ],
     'Chicken McNuggets': [
       4.39,
-      'assets/images/chicken_mcnuggets.png',
+      'assets/images/chicken_mcnuggets.jpg',
       'Chicken McNuggets',
       'Chicken, batter, sauce',
       4.4,
@@ -83,7 +83,7 @@ class McDonaldsMenu {
     ],
     'Sundae': [
       2.49,
-      'assets/images/sundae.png',
+      'assets/images/sundae.jpg',
       'Sundae',
       'Ice cream, chocolate or caramel topping, nuts, cherry',
       4.3,
@@ -92,7 +92,7 @@ class McDonaldsMenu {
     ],
     'Double Quarter Pounder': [
       6.19,
-      'assets/images/double_quarter_pounder.png',
+      'assets/images/double_quarter_pounder.jpg',
       'Double Quarter Pounder',
       'Two beef patties, cheese, pickles, onions, ketchup, mustard, sesame seed bun',
       4.5,
@@ -101,7 +101,7 @@ class McDonaldsMenu {
     ],
     'McCafe Coffee': [
       2.29,
-      'assets/images/mccafe_coffee.png',
+      'assets/images/mccafe_coffee.jpg',
       'McCafe Coffee',
       'Brewed coffee',
       4.6,
