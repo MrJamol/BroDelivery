@@ -5,7 +5,6 @@ import 'package:food_delivery/features/detail/presentation/bloc/detail_state.dar
 class ItemDetailBloc extends Bloc<ItemDetailEvent, ItemDetailState> {
   ItemDetailBloc() : super(ItemDetailState(quantity: 1, price: 9.50, selectedAddons: []));
 
-  @override
   Stream<ItemDetailState> mapEventToState(ItemDetailEvent event) async* {
     if (event is IncreaseQuantity) {
       yield ItemDetailState(

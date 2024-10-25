@@ -1,12 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:food_delivery/features/detail/presentation/bloc/detail_bloc.dart';
-import 'package:food_delivery/features/detail/presentation/bloc/detail_event.dart';
 import 'package:food_delivery/features/detail/presentation/bloc/detail_state.dart';
-import 'package:food_delivery/features/detail/presentation/widget/add_ones.dart';
+import 'package:food_delivery/features/home/persentation/widget/restourant_card.dart';
 
 class DetailScreen extends StatelessWidget {
-  const DetailScreen({super.key});
+  final String restaurantName;
+  final String imagePath;
+  final double stars;
+  final int reviews;
+  final bool freeDelivery;
+  final List<int> prepTime;
+  final List<String> categories;
+
+  const DetailScreen({
+    super.key,
+    required this.restaurantName,
+    required this.imagePath,
+    required this.stars,
+    required this.reviews,
+    required this.freeDelivery,
+    required this.prepTime,
+    required this.categories,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +30,7 @@ class DetailScreen extends StatelessWidget {
       create: (context) => ItemDetailBloc(),
       child: Scaffold(
         appBar: AppBar(
-          title: Text('Ground Beef Tacos'),
+          title: Text(restaurantName), // Show the restaurant name
         ),
         body: BlocBuilder<ItemDetailBloc, ItemDetailState>(
           builder: (context, state) {
@@ -24,76 +40,46 @@ class DetailScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Image.asset(
-                    'assets/images/tacobell.jpg',
+                    imagePath, // Display the restaurant image
                     width: 200,
                     height: 200,
-                  ), // Replace with actual image
-                  SizedBox(height: 16),
+                  ),
+                  const SizedBox(height: 16),
                   Text(
-                    'Ground Beef Tacos',
-                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                    restaurantName, // Restaurant name
+                    style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                   ),
                   Row(
                     children: [
-                      Icon(Icons.star, color: Colors.orange, size: 20),
-                      Text('4.5 (30+)', style: TextStyle(color: Colors.grey)),
-                      Spacer(),
-                      TextButton(onPressed: () {}, child: Text('See Review'))
+                      const Icon(Icons.star, color: Colors.orange, size: 20),
+                      Text('$stars ($reviews)', style: const TextStyle(color: Colors.grey)),
+                      const Spacer(),
+                      TextButton(onPressed: () {}, child: const Text('See Review')),
                     ],
                   ),
                   Text(
-                    '\$${state.price.toStringAsFixed(2)}',
-                    style: TextStyle(fontSize: 28, color: Colors.orange),
+                    freeDelivery ? 'Free Delivery' : 'Fast Delivery',
+                    style: const TextStyle(fontSize: 28, color: Colors.orange),
                   ),
-                  SizedBox(height: 8),
+                  const SizedBox(height: 8),
                   Text(
-                    'Brown the beef better. Lean ground beef - I like to use 85% lean angus. Garlic - use fresh chopped...',
-                    style: TextStyle(color: Colors.grey),
+                    'Preparation Time: ${prepTime[0]}-${prepTime[1]} mins',
+                    style: const TextStyle(color: Colors.grey),
                   ),
-                  SizedBox(height: 16),
-                  Row(
-                    children: [
-                      Text('Quantity:'),
-                      IconButton(
-                        icon: Icon(Icons.remove),
-                        onPressed: () {
-                          // context.read<ItemDetailBloc>().add(DecreaseQuantity());
-                        },
-                      ),
-                      Text(state.quantity.toString()),
-                      IconButton(
-                        icon: Icon(Icons.add),
-                        onPressed: () {
-                          // context.read<ItemDetailBloc>().add(IncreaseQuantity());
-                        },
-                      ),
-                    ],
+                  const SizedBox(height: 16),
+                  Wrap(
+                    spacing: 3,
+                    runSpacing: 3,
+                    children: categories.map((category) {
+                      return CategoryChip(label: category.toUpperCase());
+                    }).toList(),
                   ),
-                  SizedBox(height: 16),
-                  Text('Choice of Add On', style: TextStyle(fontSize: 18)),
-                  AddOnTile(
-                    name: 'Pepper Julienned',
-                    price: 2.30,
-                    selected: state.selectedAddons.contains('Pepper Julienned'),
-                    onSelected: () {
-                      // context.read<ItemDetailBloc>().add(ToggleAddon('Pepper Julienned'));
-                    },
-                  ),
-                  AddOnTile(
-                    name: 'Baby Spinach',
-                    price: 4.70,
-                    selected: state.selectedAddons.contains('Baby Spinach'),
-                    onSelected: () {
-                      // context.read<ItemDetailBloc>().add(ToggleAddon('Baby Spinach'));
-                    },
-                  ),
-                  Spacer(),
+                  const Spacer(),
                   Center(
                     child: ElevatedButton(
                       onPressed: () {
-                        // context.read<ItemDetailBloc>().add(AddToCart());
                       },
-                      child: Text('ADD TO CART'),
+                      child: const Text('ADD TO CART'),
                     ),
                   ),
                 ],

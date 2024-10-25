@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:food_delivery/core/constants/colors/app_colors.dart';
+import 'package:food_delivery/features/detail/presentation/screen/detail_screen.dart';
 import 'package:food_delivery/features/home/persentation/widget/restourant_list.dart';
 
 class FoodCardWidget extends StatelessWidget {
@@ -68,154 +69,172 @@ class _RestaurantCardState extends State<RestaurantCard> {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: 280,
-      height: 340,
-      child: Card(
-        elevation: 6,
-        shadowColor: Colors.black,
-        color: AppColors.instance.white,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(15),
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Stack(
-              children: [
-                ClipRRect(
-                  borderRadius: const BorderRadius.only(
-                    topLeft: Radius.circular(15),
-                    topRight: Radius.circular(15),
-                  ),
-                  child: Image.asset(
-                    widget.imagePath,
-                    height: 200,
-                    width: double.infinity,
-                    fit: BoxFit.cover,
-                  ),
-                ),
-                Positioned(
-                  top: 10,
-                  left: 10,
-                  child: Container(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(12),
+    return GestureDetector(
+      onTap: (){
+         Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => DetailScreen(
+              restaurantName: widget.restaurantName,
+              stars: widget.stars,
+              reviews: widget.reviews,
+              freeDelivery: widget.freeDelivery,
+              prepTime: widget.prepTime,
+              categories: widget.categories,
+              imagePath: widget.imagePath,
+            ),
+          ),
+        );
+      },
+      child: SizedBox(
+        width: 280,
+        height: 340,
+        child: Card(
+          elevation: 6,
+          shadowColor: Colors.black,
+          color: AppColors.instance.white,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(15),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Stack(
+                children: [
+                  ClipRRect(
+                    borderRadius: const BorderRadius.only(
+                      topLeft: Radius.circular(15),
+                      topRight: Radius.circular(15),
                     ),
-                    child: Row(
+                    child: Image.asset(
+                      widget.imagePath,
+                      height: 200,
+                      width: double.infinity,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                  Positioned(
+                    top: 10,
+                    left: 10,
+                    child: Container(
+                      padding:
+                          const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: Row(
+                        children: [
+                          Text(
+                            widget.stars.toString(),
+                            style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black,
+                            ),
+                          ),
+                          const Icon(
+                            Icons.star,
+                            color: Colors.orange,
+                            size: 16,
+                          ),
+                          const SizedBox(width: 5),
+                          Text(
+                            '(${widget.reviews})',
+                            style: TextStyle(
+                              color: Colors.grey[700],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  Positioned(
+                    top: 10,
+                    right: 10,
+                    child: GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          isFavorited = !isFavorited;
+                        });
+                      },
+                      child: Container(
+                        padding: const EdgeInsets.all(8),
+                        decoration: const BoxDecoration(
+                          color: Colors.red,
+                          shape: BoxShape.circle,
+                        ),
+                        child: Icon(
+                          isFavorited ? Icons.favorite : Icons.favorite_border,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
                       children: [
                         Text(
-                          widget.stars.toString(),
+                          widget.restaurantName,
                           style: const TextStyle(
+                            fontSize: 18,
                             fontWeight: FontWeight.bold,
-                            color: Colors.black,
                           ),
-                        ),
-                        const Icon(
-                          Icons.star,
-                          color: Colors.orange,
-                          size: 16,
                         ),
                         const SizedBox(width: 5),
-                        Text(
-                          '(${widget.reviews})',
-                          style: TextStyle(
-                            color: Colors.grey[700],
-                          ),
+                        const Icon(
+                          Icons.verified,
+                          color: Colors.green,
+                          size: 16,
                         ),
                       ],
                     ),
-                  ),
-                ),
-                Positioned(
-                  top: 10,
-                  right: 10,
-                  child: GestureDetector(
-                    onTap: () {
-                      setState(() {
-                        isFavorited = !isFavorited;
-                      });
-                    },
-                    child: Container(
-                      padding: const EdgeInsets.all(8),
-                      decoration: const BoxDecoration(
-                        color: Colors.red,
-                        shape: BoxShape.circle,
-                      ),
-                      child: Icon(
-                        isFavorited ? Icons.favorite : Icons.favorite_border,
-                        color: Colors.white,
-                      ),
+                    const SizedBox(height: 5),
+                    Row(
+                      children: [
+                        Icon(Icons.delivery_dining,
+                            size: 16, color: AppColors.instance.kPrimary),
+                        const SizedBox(width: 4),
+                        Text(
+                          widget.freeDelivery ? 'Free delivery' : 'Fast delivery',
+                          style: const TextStyle(color: Colors.grey),
+                        ),
+                        const SizedBox(width: 10),
+                        const Icon(Icons.access_time,
+                            size: 16, color: Colors.red),
+                        const SizedBox(width: 4),
+                        Text(
+                          '${widget.prepTime[0]}-${widget.prepTime[1]} mins',
+                          style: const TextStyle(color: Colors.grey),
+                        ),
+                      ],
                     ),
-                  ),
-                ),
-              ],
-            ),
-            Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    children: [
-                      Text(
-                        widget.restaurantName,
-                        style: const TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
+                    const SizedBox(height: 10),
+                    Wrap(
+                      spacing: 3,
+                      runSpacing: 3,
+                      children: widget.categories.take(3).map((category) {
+                        return CategoryChip(label: category.toUpperCase());
+                      }).toList(),
+                    ),
+                    if (widget.categories.length > 3)
+                      Padding(
+                        padding: const EdgeInsets.only(top: 5),
+                        child: Text(
+                          '+ ${widget.categories.length - 3} more',
+                          style: const TextStyle(color: Colors.grey),
                         ),
                       ),
-                      const SizedBox(width: 5),
-                      const Icon(
-                        Icons.verified,
-                        color: Colors.green,
-                        size: 16,
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 5),
-                  Row(
-                    children: [
-                      Icon(Icons.delivery_dining,
-                          size: 16, color: AppColors.instance.kPrimary),
-                      const SizedBox(width: 4),
-                      Text(
-                        widget.freeDelivery ? 'Free delivery' : 'Fast delivery',
-                        style: const TextStyle(color: Colors.grey),
-                      ),
-                      const SizedBox(width: 10),
-                      const Icon(Icons.access_time,
-                          size: 16, color: Colors.red),
-                      const SizedBox(width: 4),
-                      Text(
-                        '${widget.prepTime[0]}-${widget.prepTime[1]} mins',
-                        style: const TextStyle(color: Colors.grey),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 10),
-                  Wrap(
-                    spacing: 3,
-                    runSpacing: 3,
-                    children: widget.categories.take(3).map((category) {
-                      return CategoryChip(label: category.toUpperCase());
-                    }).toList(),
-                  ),
-                  if (widget.categories.length > 3)
-                    Padding(
-                      padding: const EdgeInsets.only(top: 5),
-                      child: Text(
-                        '+ ${widget.categories.length - 3} more',
-                        style: const TextStyle(color: Colors.grey),
-                      ),
-                    ),
-                ],
+                  ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
