@@ -8,6 +8,8 @@ import 'package:food_delivery/features/profile/persentation/bloc/profile_state.d
 import 'package:food_delivery/features/profile/persentation/widget/profile_widget.dart';
 
 class ProfileScreen extends StatelessWidget {
+  const ProfileScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
@@ -36,7 +38,9 @@ class ProfileScreen extends StatelessWidget {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              SizedBox(height: 10,),
+                              SizedBox(
+                                height: 10,
+                              ),
                               Text(
                                 state.userName,
                                 style: const TextStyle(
@@ -85,10 +89,6 @@ class ProfileScreen extends StatelessWidget {
                           iconPath: 'assets/icons/helps.svg',
                         ),
                         const Divider(),
-                        ProfileMenuItem(
-                          title: 'Log Out',
-                          iconPath: 'assets/icons/power.svg',
-                        ),
                       ],
                     ),
                   ),
@@ -96,11 +96,12 @@ class ProfileScreen extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.all(16.0),
                     child: ElevatedButton.icon(
-                      onPressed: () {
-                        // Handle logout action
-                      },
+                      onPressed: () {},
                       icon: SvgPicture.asset('assets/icons/power.svg'),
-                      label: const Text("Log Out"),
+                      label: Text(
+                        "Log Out",
+                        style: TextStyle(color: AppColors.instance.white),
+                      ),
                       style: ElevatedButton.styleFrom(
                         backgroundColor: AppColors.instance.kPrimary,
                         padding: const EdgeInsets.symmetric(

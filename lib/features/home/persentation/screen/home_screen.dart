@@ -12,18 +12,36 @@ import 'package:food_delivery/features/profile/persentation/screen/profile_page.
 import 'package:get/get.dart';
 
 class HomeScreen extends StatelessWidget {
-  final List<Map<String, String>> categories = [
-    {"name": "Burger", "icon": "assets/icons/burger.png"},
-    {"name": "Donut", "icon": "assets/icons/donuts.png"},
-    {"name": "Pizza", "icon": "assets/icons/pizza.png"},
-    {"name": "Mexican", "icon": "assets/icons/hotdog.png"},
-    {"name": "Asian", "icon": "assets/icons/cheese.png"},
-  ];
-
   HomeScreen({super.key});
+
+  final drawerController = Get.put(MyDrawerController());
 
   @override
   Widget build(BuildContext context) {
+    return GetBuilder<MyDrawerController>(
+      builder: (_) => ZoomDrawer(
+        controller: _.zoomDrawerController,
+        menuScreen: const ProfileScreen(),
+        mainScreen: _buildMainScreen(context),
+        borderRadius: 24.0,
+        showShadow: true,
+        angle: -12.0,
+        menuBackgroundColor: Colors.grey.shade300,
+        drawerShadowsBackgroundColor: Colors.grey,
+        slideWidth: MediaQuery.of(context).size.width * 0.85,
+      ),
+    );
+  }
+
+  Widget _buildMainScreen(BuildContext context) {
+    final List<Map<String, String>> categories = [
+      {"name": "Burger", "icon": "assets/icons/burger.png"},
+      {"name": "Donut", "icon": "assets/icons/donuts.png"},
+      {"name": "Pizza", "icon": "assets/icons/pizza.png"},
+      {"name": "Mexican", "icon": "assets/icons/hotdog.png"},
+      {"name": "Asian", "icon": "assets/icons/cheese.png"},
+    ];
+
     return Scaffold(
       backgroundColor: AppColors.instance.white,
       appBar: AppBar(
@@ -32,7 +50,7 @@ class HomeScreen extends StatelessWidget {
         leading: Padding(
           padding: const EdgeInsets.all(8.0),
           child: GestureDetector(
-            onTap: () {},
+            onTap: drawerController.toggleDrawer, // Opens the drawer
             child: Container(
               width: 45,
               height: 45,
@@ -86,7 +104,7 @@ class HomeScreen extends StatelessWidget {
         ),
         actions: [
           const CircleAvatar(
-            backgroundImage: const AssetImage('assets/images/person.png'),
+            backgroundImage: AssetImage('assets/images/person.png'),
           ),
           const SizedBox(width: 16),
         ],
@@ -98,15 +116,13 @@ class HomeScreen extends StatelessWidget {
           children: [
             const Text(
               "What would you like\nto order",
-              style: const TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+              style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 16),
             Row(
               children: [
                 Expanded(child: _buildSearchBar()),
-                const SizedBox(
-                  width: 10,
-                ),
+                const SizedBox(width: 10),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: GestureDetector(
@@ -161,9 +177,7 @@ class HomeScreen extends StatelessWidget {
                 ),
               );
             }),
-            const SizedBox(
-              height: 10,
-            ),
+            const SizedBox(height: 10),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
