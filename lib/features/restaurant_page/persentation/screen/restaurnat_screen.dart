@@ -21,7 +21,7 @@ class RestaurantScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // Custom Header
-            Container(
+            SizedBox(
               height: 200, // Define height for the header
               child: Stack(
                 children: [
@@ -61,8 +61,8 @@ class RestaurantScreen extends StatelessWidget {
               ),
             ),
             // Menu Title
-            Padding(
-              padding: const EdgeInsets.all(16.0),
+            const Padding(
+              padding: EdgeInsets.all(16.0),
               child: Text(
                 'McDonald\'s\nMenu',
                 style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),

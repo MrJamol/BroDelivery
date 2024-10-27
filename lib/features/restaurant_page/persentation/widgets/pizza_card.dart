@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:food_delivery/features/detail/presentation/screen/detail_screen.dart';
 
 class PizzaCard extends StatefulWidget {
   final String image;
@@ -25,7 +26,27 @@ class _PizzaCardState extends State<PizzaCard> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => DetailScreen(
+              restaurantName: widget.name,
+              imagePath: widget.image,
+              stars: widget.rating,
+              reviews: 100, // Example value for reviews
+              price: widget.price,
+              description: widget.description,
+              freeDelivery: true, // Example value, customize as needed
+              prepTime: [10, 20], // Example prep time range
+              categories: ['Pizza', 'Fast Food'], // Example categories
+            ),
+          ),
+        );
+      },
+      child: Container(
+       
       margin: EdgeInsets.all(16),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20),
@@ -156,6 +177,8 @@ class _PizzaCardState extends State<PizzaCard> {
             ),
           ],
         ),
+      ),
+
       ),
     );
   }

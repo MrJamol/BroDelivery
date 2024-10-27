@@ -5,6 +5,21 @@ abstract class CartEvent extends Equatable {
   @override
   List<Object> get props => [];
 }
+// cart_event.dart
+class AddToCartEvent extends CartEvent {
+  final String title;
+  final String imagePath;
+  final String description;
+  final double price;
+
+  AddToCartEvent({
+    required this.title,
+    required this.imagePath,
+    required this.description,
+    required this.price,
+  });
+}
+
 
 // Event to load the initial cart items
 class LoadCartEvent extends CartEvent {}

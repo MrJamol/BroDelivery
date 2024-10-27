@@ -1,14 +1,13 @@
-// blocs/cart/cart_state.dart
 import 'package:equatable/equatable.dart';
 
 class CartState extends Equatable {
-  final List<Map<String, dynamic>> cartItems;
+  final List<dynamic> cartItems;
   final double subtotal;
   final double tax;
   final double delivery;
   final double total;
 
-  CartState({
+  const CartState({
     required this.cartItems,
     required this.subtotal,
     required this.tax,
@@ -16,37 +15,14 @@ class CartState extends Equatable {
     required this.total,
   });
 
-  // Initial state with hardcoded values
+  // Initial state with empty values
   factory CartState.initial() {
-    List<Map<String, dynamic>> initialItems = [
-      {
-        "imagePath": "assets/images/apple_pie.jpg",
-        "title": "Red n hot pizza",
-        "description": "Spicy chicken, beef",
-        "price": 15.30,
-        "quantity": 2,
-      },
-      {
-        "imagePath": "assets/images/chipotle.jpg",
-        "title": "Greek salad",
-        "description": "with baked salmon",
-        "price": 12.00,
-        "quantity": 2,
-      },
-    ];
-
-    double subtotal = initialItems.fold(
-        0, (sum, item) => sum + (item['price'] * item['quantity']));
-    double tax = 5.30;
-    double delivery = 1.00;
-    double total = subtotal + tax + delivery;
-
-    return CartState(
-      cartItems: initialItems,
-      subtotal: subtotal,
-      tax: tax,
-      delivery: delivery,
-      total: total,
+    return const CartState(
+      cartItems: [],
+      subtotal: 0.0,
+      tax: 0.0,
+      delivery: 0.0,
+      total: 0.0,
     );
   }
 
@@ -55,7 +31,7 @@ class CartState extends Equatable {
 
   // CopyWith method for immutability
   CartState copyWith({
-    List<Map<String, dynamic>>? cartItems,
+    List<dynamic>? cartItems,
     double? subtotal,
     double? tax,
     double? delivery,

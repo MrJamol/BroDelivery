@@ -1,13 +1,27 @@
-// blocs/cart/cart_bloc.dart
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:food_delivery/features/cart/presentation/bloc/cart_event.dart';
-import 'package:food_delivery/features/cart/presentation/bloc/cart_state.dart';
+import 'cart_event.dart';
+import 'cart_state.dart';
 
 class CartBloc extends Bloc<CartEvent, CartState> {
-  CartBloc() : super(CartState.initial()) {
+  CartBloc() : super(CartState(cartItems: <Map<String, dynamic>>[], subtotal: 0, tax: 0, delivery: 0, total: 0)) {
+
+    on<AddToCartEvent>(_onAddToCart);
     on<LoadCartEvent>(_onLoadCart);
     on<UpdateQuantityEvent>(_onUpdateQuantity);
     on<ApplyPromoCodeEvent>(_onApplyPromoCode);
+  }
+
+  void _onAddToCart(AddToCartEvent event, Emitter<CartState> emit) {
+    final updatedCartItems = List.from(state.cartItems)
+      ..add({
+        'title': event.title,
+        'imagePath': event.imagePath,
+        'description': event.description,
+        'price': event.price,
+        'quantity': 1,
+      });
+    
+    emit(state.copyWith(cartItems: updatedCartItems));
   }
 
   void _onLoadCart(LoadCartEvent event, Emitter<CartState> emit) {

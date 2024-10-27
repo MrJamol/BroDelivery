@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:food_delivery/core/constants/colors/app_colors.dart';
+import 'package:food_delivery/features/cart/presentation/bloc/cart_bloc.dart';
+import 'package:food_delivery/features/cart/presentation/bloc/cart_event.dart';
+import 'package:food_delivery/features/cart/presentation/screen/cart_screen.dart';
 import 'package:food_delivery/features/detail/presentation/bloc/detail_bloc.dart';
 import 'package:food_delivery/features/detail/presentation/bloc/detail_state.dart';
 import 'package:food_delivery/features/detail/presentation/widget/add_ones.dart';
@@ -11,7 +14,7 @@ class DetailScreen extends StatefulWidget {
   final String imagePath;
   final double stars;
   final int reviews;
-  final int price;
+  final double price;
   final String description;
   final bool freeDelivery;
   final List<int> prepTime;
@@ -43,6 +46,7 @@ class _DetailScreenState extends State<DetailScreen> {
     return BlocProvider(
       create: (context) => ItemDetailBloc(),
       child: Scaffold(
+        backgroundColor: AppColors.instance.white,
         body: BlocBuilder<ItemDetailBloc, ItemDetailState>(
           builder: (context, state) {
             return Stack(
@@ -157,7 +161,10 @@ class _DetailScreenState extends State<DetailScreen> {
                                     fontWeight: FontWeight.bold,
                                     color: AppColors.instance.kPrimary),
                               ),
-
+                              SizedBox(
+                                width: 10,
+                              ),
+                              Text('per pc'),
                               Spacer(), // Space between price and quantity controls
                               // Minus Button
                               GestureDetector(
@@ -245,13 +252,53 @@ class _DetailScreenState extends State<DetailScreen> {
                             }).toList(),
                           ),
                           const SizedBox(height: 16),
-                          // Add to Cart Button
+                          Text(
+                            'Total: ${((widget.price * quantity).toStringAsFixed(2))} Usd', // Display total price rounded to 2 decimal places
+                            style: TextStyle(
+                              fontSize: 30,
+                              fontWeight: FontWeight.bold,
+                              color: AppColors.instance.kPrimary,
+                            ),
+                          ),
+
+                          SizedBox(
+                            height: 50,
+                          ),
+
                           Center(
                             child: ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: AppColors.instance.kPrimary,
+                                padding: const EdgeInsets.symmetric(
+                                    vertical: 12.0, horizontal: 32.0),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(30),
+                                ),
+                              ),
                               onPressed: () {
-                                // Add to cart functionality
-                              },
-                              child: const Text('ADD TO CART'),
+  // Create the cart item data directly
+  final cartItem = {
+    'title': widget.restaurantName,
+    'imagePath': widget.imagePath,
+    'description': widget.description,
+    'price': widget.price * quantity.toDouble(), // Ensure `price` is in `double` format
+    'quantity': quantity, // Include the quantity if needed
+  };
+
+  // Navigate to CartScreen and pass the cart item as a list
+  Navigator.push(
+    context,
+    MaterialPageRoute(
+      builder: (context) => CartScreen(initialCartItems: [cartItem]), // Pass as a list
+    ),
+  );
+},
+
+                              child: Text(
+                                'ADD TO CART',
+                                style:
+                                    TextStyle(color: AppColors.instance.white),
+                              ),
                             ),
                           ),
                         ],
