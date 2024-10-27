@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:food_delivery/features/cart/presentation/bloc/cart_bloc.dart';
+import 'package:food_delivery/features/cart/presentation/screen/cart_screen.dart';
 import 'package:food_delivery/features/detail/presentation/bloc/detail_bloc.dart';
 import 'package:food_delivery/features/home/persentation/bloc/home_bloc.dart';
 import 'package:food_delivery/features/home/persentation/screen/home_screen.dart';
@@ -20,7 +22,8 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (_) => HomeBloc()),
         BlocProvider(create: (_) => ProfileBloc()),
         BlocProvider(create: (_) => ItemDetailBloc()),
-        BlocProvider(create: (_) => RestaurantBloc())
+        BlocProvider(create: (_) => RestaurantBloc()),
+        BlocProvider(create: (_) => CartBloc())
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
