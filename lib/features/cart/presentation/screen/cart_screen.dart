@@ -1,46 +1,41 @@
 import 'package:flutter/material.dart';
-import 'package:hive/hive.dart';
 import 'package:food_delivery/features/cart/presentation/widgets/cart_item_tile.dart';
 import 'package:food_delivery/features/cart/presentation/widgets/promo_code_field.dart';
 
 class CartScreen extends StatefulWidget {
-  final List<Map<String, Object>> initialCartItems; // Accept cart items as a parameter
+  final List<Map<String, dynamic>>? newCartItems;
 
-  CartScreen({super.key, required this.initialCartItems});
+  const CartScreen({super.key, this.newCartItems});
 
   @override
   _CartScreenState createState() => _CartScreenState();
 }
 
 class _CartScreenState extends State<CartScreen> {
-  final Box<Map<String, Object>> cartBox = Hive.box<Map<String, Object>>('cart'); // Access the cart box
+  List<Map<String, dynamic>> cartItems = [];
   final TextEditingController promoCodeController = TextEditingController();
 
   @override
   void initState() {
     super.initState();
-    _saveCartItemsToHive(widget.initialCartItems);
-  }
 
-  void _saveCartItemsToHive(List<Map<String, Object>> items) {
-    for (var item in items) {
-      cartBox.add(item); // Add each item to the Hive box
+    // Initialize cartItems with newCartItems if provided
+    if (widget.newCartItems != null && widget.newCartItems!.isNotEmpty) {
+      cartItems.addAll(widget.newCartItems!);
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    double subtotal = 0;
-    double tax = 0; // You can set this based on your requirements
-    double delivery = 0; // You can set this based on your requirements
+    double subtotal = cartItems.fold(
+      0,
+      (sum, item) =>
+          sum + (item['price'] as double) * (item['quantity'] as int),
+    );
 
-    // Retrieve cart items from Hive
-    List<Map<String, Object>> cartItems = List<Map<String, Object>>.from(cartBox.values);
-
-    // Calculate subtotal
-    subtotal = cartItems.fold(0, (sum, item) => sum + (item['price'] as double )* (item['quantity'] as int));
-
-    double total = subtotal + tax + delivery;
+    double taxAndFees = subtotal * 0.12; // Calculate tax and fees
+    double deliveryCost = 5.0; // Fixed delivery cost
+    double total = subtotal + taxAndFees + deliveryCost; // Total calculation
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -70,17 +65,16 @@ class _CartScreenState extends State<CartScreen> {
                           price: item['price'] as double,
                           quantity: item['quantity'] as int,
                           onIncrement: () {
-                            // Increment logic
-                            item['quantity'] = (item['quantity'] as int) + 1;
-                            cartBox.putAt(index, item); // Update the item in Hive
-                            setState(() {}); // Update the UI
+                            setState(() {
+                              item['quantity'] = (item['quantity'] as int) + 1;
+                            });
                           },
                           onDecrement: () {
-                            // Decrement logic
                             if (item['quantity'] as int > 1) {
-                              item['quantity'] = (item['quantity'] as int) - 1;
-                              cartBox.putAt(index, item); // Update the item in Hive
-                              setState(() {}); // Update the UI
+                              setState(() {
+                                item['quantity'] =
+                                    (item['quantity'] as int) - 1;
+                              });
                             }
                           },
                         );
@@ -91,7 +85,6 @@ class _CartScreenState extends State<CartScreen> {
             PromoCodeField(
               controller: promoCodeController,
               onApply: () {
-                // Handle promo code application logic here
                 print('Promo Code Applied: ${promoCodeController.text}');
               },
             ),
@@ -100,8 +93,8 @@ class _CartScreenState extends State<CartScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 _buildSummaryRow('Subtotal', subtotal),
-                _buildSummaryRow('Tax and Fees', tax),
-                _buildSummaryRow('Delivery', delivery),
+                _buildSummaryRow('Tax and Fees', taxAndFees),
+                _buildSummaryRow('Delivery Cost', deliveryCost),
                 Divider(thickness: 1, height: 32),
                 _buildSummaryRow('Total', total, isTotal: true),
               ],
@@ -120,7 +113,8 @@ class _CartScreenState extends State<CartScreen> {
               ),
               child: Text(
                 'CHECKOUT',
-                style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+                style:
+                    TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
               ),
             ),
           ],
@@ -137,11 +131,17 @@ class _CartScreenState extends State<CartScreen> {
         children: [
           Text(
             label,
-            style: TextStyle(fontSize: isTotal ? 18 : 16, fontWeight: isTotal ? FontWeight.bold : FontWeight.normal),
+            style: TextStyle(
+              fontSize: isTotal ? 18 : 16,
+              fontWeight: isTotal ? FontWeight.bold : FontWeight.normal,
+            ),
           ),
           Text(
             '\$${amount.toStringAsFixed(2)} USD',
-            style: TextStyle(fontSize: isTotal ? 18 : 16, fontWeight: isTotal ? FontWeight.bold : FontWeight.normal),
+            style: TextStyle(
+              fontSize: isTotal ? 18 : 16,
+              fontWeight: isTotal ? FontWeight.bold : FontWeight.normal,
+            ),
           ),
         ],
       ),

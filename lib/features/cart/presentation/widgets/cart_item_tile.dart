@@ -53,15 +53,18 @@ class CartItemTile extends StatelessWidget {
                       child: Text(
                         title,
                         style: const TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 16),
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16,
+                        ),
                         overflow: TextOverflow.ellipsis,
                       ),
                     ),
                     // 'X' button, only shown if onRemove is provided
-                    IconButton(
-                      icon: const Icon(Icons.close, color: Colors.red),
-                      onPressed: onRemove,
-                    ),
+                    if (onRemove != null)
+                      IconButton(
+                        icon: const Icon(Icons.close, color: Colors.red),
+                        onPressed: onRemove,
+                      ),
                   ],
                 ),
                 Text(description, style: const TextStyle(color: Colors.grey)),
@@ -92,7 +95,7 @@ class CartItemTile extends StatelessWidget {
               const SizedBox(width: 8), // Space between buttons
               // Editable quantity field
               SizedBox(
-                width: 20, // Set a fixed width for the input
+                width: 40, // Set a fixed width for the input
                 child: TextField(
                   keyboardType: TextInputType.number,
                   textAlign: TextAlign.center,
@@ -103,7 +106,6 @@ class CartItemTile extends StatelessWidget {
                     if (newQuantity != null && newQuantity >= 0) {
                       if (onQuantityChanged != null) {
                         onQuantityChanged!(newQuantity);
-                        onIncrement;
                       }
                     }
                   },
