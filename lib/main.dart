@@ -7,6 +7,8 @@ import 'package:food_delivery/features/home/persentation/bloc/home_bloc.dart';
 import 'package:food_delivery/features/home/persentation/screen/home_screen.dart';
 import 'package:food_delivery/features/profile/persentation/bloc/profile_bloc.dart';
 import 'package:food_delivery/features/restaurant_page/persentation/bloc/restaurant_bloc.dart';
+import 'package:food_delivery/features/welcome/presentation/screen/splash_screen.dart';
+import 'package:food_delivery/features/welcome/presentation/screen/welcome_screen.dart';
 import 'package:hive/hive.dart';
 import 'package:path_provider/path_provider.dart';
 
@@ -38,7 +40,7 @@ class MyApp extends StatelessWidget {
           primarySwatch: Colors.blue,
           visualDensity: VisualDensity.adaptivePlatformDensity,
         ),
-        home: HomeScreen(),
+        home:  SplashScreen(),
       ),
     );
   }

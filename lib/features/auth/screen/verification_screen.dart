@@ -1,7 +1,7 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:food_delivery/core/constants/colors/app_colors.dart';
-import 'package:food_delivery/features/home/persentation/screen/home_screen.dart';
+import 'package:food_delivery/features/welcome/presentation/screen/welcome_screen.dart';
 
 class VerificationScreen extends StatefulWidget {
   const VerificationScreen({super.key});
@@ -42,7 +42,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
       snackbarMessage = 'Code: $generatedCode';
       showCustomSnackbar = true;
     });
-    Future.delayed(Duration(seconds: 5), () {
+    Future.delayed(Duration(seconds: 10), () {
       setState(() {
         showCustomSnackbar = false;
       });
@@ -66,7 +66,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
     if (enteredCode == generatedCode) {
       _clearFields(); 
       Navigator.push(
-          context, MaterialPageRoute(builder: (_) => HomeScreen()));
+          context, MaterialPageRoute(builder: (_) => WelcomeScreen()));
     } else {
       setState(() {
         snackbarMessage = 'Incorrect code. Please try again!';

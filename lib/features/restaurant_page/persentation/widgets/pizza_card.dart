@@ -173,7 +173,6 @@ class _PizzaCardState extends State<PizzaCard> {
           ],
         ),
       ),
-
       ),
     );
   }
