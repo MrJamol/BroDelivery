@@ -2,18 +2,18 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:food_delivery/features/detail/presentation/bloc/detail_event.dart';
 import 'package:food_delivery/features/detail/presentation/bloc/detail_state.dart';
 
-class ItemDetailBloc extends Bloc<ItemDetailEvent, ItemDetailState> {
-  ItemDetailBloc() : super(ItemDetailState(quantity: 1, price: 9.50, selectedAddons: []));
+class DetailBloc extends Bloc<DetailEvent, DetailState> {
+  DetailBloc() : super(DetailState(quantity: 1, price: 9.50, selectedAddons: []));
 
-  Stream<ItemDetailState> mapEventToState(ItemDetailEvent event) async* {
+  Stream<DetailState> mapEventToState(DetailEvent event) async* {
     if (event is IncreaseQuantity) {
-      yield ItemDetailState(
+      yield DetailState(
         quantity: state.quantity + 1,
         price: state.price,
         selectedAddons: state.selectedAddons,
       );
     } else if (event is DecreaseQuantity) {
-      yield ItemDetailState(
+      yield DetailState(
         quantity: state.quantity > 1 ? state.quantity - 1 : 1,
         price: state.price,
         selectedAddons: state.selectedAddons,
@@ -25,7 +25,7 @@ class ItemDetailBloc extends Bloc<ItemDetailEvent, ItemDetailState> {
       } else {
         updatedAddons.add(event.addon);
       }
-      yield ItemDetailState(
+      yield DetailState(
         quantity: state.quantity,
         price: state.price,
         selectedAddons: updatedAddons,

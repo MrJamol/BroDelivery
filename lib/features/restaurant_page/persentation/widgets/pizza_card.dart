@@ -35,12 +35,12 @@ class _PizzaCardState extends State<PizzaCard> {
               restaurantName: widget.name,
               imagePath: widget.image,
               stars: widget.rating,
-              reviews: 100, // Example value for reviews
+              reviews: 100, 
               price: widget.price,
               description: widget.description,
-              freeDelivery: true, // Example value, customize as needed
-              prepTime: [10, 20], // Example prep time range
-              categories: ['Pizza', 'Fast Food'], // Example categories
+              freeDelivery: true, 
+              prepTime: [10, 20], 
+              categories: ['Pizza', 'Fast Food'], 
             ),
           ),
         );
@@ -63,7 +63,6 @@ class _PizzaCardState extends State<PizzaCard> {
         borderRadius: BorderRadius.circular(20),
         child: Column(
           children: [
-            // Top Image with Rounded Bottom Only
             Stack(
               children: [
                 ClipRRect(
@@ -78,7 +77,6 @@ class _PizzaCardState extends State<PizzaCard> {
                     fit: BoxFit.cover,
                   ),
                 ),
-                // Price Tag at Top Left
                 Positioned(
                   top: 10,
                   left: 10,
@@ -93,12 +91,11 @@ class _PizzaCardState extends State<PizzaCard> {
                       style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
-                        color: Colors.orange, // Adjust color as needed
+                        color: Colors.orange, 
                       ),
                     ),
                   ),
                 ),
-                // Favorite Icon at Top Right
                 Positioned(
                   top: 10,
                   right: 10,
@@ -122,7 +119,6 @@ class _PizzaCardState extends State<PizzaCard> {
                     ),
                   ),
                 ),
-                // Rating Badge at Bottom Left of Image
                 Positioned(
                   bottom: 10,
                   left: 10,
@@ -146,7 +142,6 @@ class _PizzaCardState extends State<PizzaCard> {
                 ),
               ],
             ),
-            // Bottom Section with Name and Description
             Container(
               padding: EdgeInsets.all(12),
               width: double.infinity,

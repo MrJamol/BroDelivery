@@ -27,7 +27,7 @@ class MyApp extends StatelessWidget {
       providers: [
         BlocProvider(create: (_) => HomeBloc()),
         BlocProvider(create: (_) => ProfileBloc()),
-        BlocProvider(create: (_) => ItemDetailBloc()),
+        BlocProvider(create: (_) => DetailBloc()),
         BlocProvider(create: (_) => RestaurantBloc()),
         BlocProvider(create: (_) => CartBloc())
       ],

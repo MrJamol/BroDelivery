@@ -39,7 +39,6 @@ class CartBloc extends Bloc<CartEvent, CartState> {
       item['quantity'] = currentQuantity - 1;
     }
 
-    // Recalculate totals
     double subtotal = updatedItems.fold(0, (sum, item) => sum + (item['price'] * item['quantity']));
     double total = subtotal + state.tax + state.delivery;
 

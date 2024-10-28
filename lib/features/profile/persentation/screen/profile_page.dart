@@ -92,7 +92,6 @@ class ProfileScreen extends StatelessWidget {
                       ],
                     ),
                   ),
-                  // Logout button at bottom
                   Padding(
                     padding: const EdgeInsets.all(16.0),
                     child: ElevatedButton.icon(

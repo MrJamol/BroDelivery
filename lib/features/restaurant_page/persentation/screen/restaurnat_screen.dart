@@ -20,12 +20,10 @@ class RestaurantScreen extends StatelessWidget {
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Custom Header
             SizedBox(
-              height: 200, // Define height for the header
+              height: 200, 
               child: Stack(
                 children: [
-                  // Back Button
                   Positioned(
                     left: 16,
                     top: 35,
@@ -47,20 +45,18 @@ class RestaurantScreen extends StatelessWidget {
                       ),
                     ),
                   ),
-                  // Image on the top right corner
                   Positioned(
                     right: -60,
                     top: -30,
                     child: Image.asset(
-                      'assets/images/piza.png', // Change to your image path
-                      width: 250, // Adjust width as needed
-                      height: 250, // Adjust height as needed
+                      'assets/images/piza.png', 
+                      width: 250, 
+                      height: 250,
                     ),
                   ),
                 ],
               ),
             ),
-            // Menu Title
             const Padding(
               padding: EdgeInsets.all(16.0),
               child: Text(

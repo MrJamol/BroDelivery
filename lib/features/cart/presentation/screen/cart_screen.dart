@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:food_delivery/features/cart/presentation/widgets/cart_item_tile.dart';
 import 'package:food_delivery/features/cart/presentation/widgets/promo_code_field.dart';
+import 'package:food_delivery/features/home/persentation/screen/home_screen.dart';
+import 'package:lottie/lottie.dart';
 
 class CartScreen extends StatefulWidget {
   final List<Map<String, dynamic>>? newCartItems;
@@ -19,7 +21,6 @@ class _CartScreenState extends State<CartScreen> {
   void initState() {
     super.initState();
 
-    // Initialize cartItems with newCartItems if provided
     if (widget.newCartItems != null && widget.newCartItems!.isNotEmpty) {
       cartItems.addAll(widget.newCartItems!);
     }
@@ -33,9 +34,9 @@ class _CartScreenState extends State<CartScreen> {
           sum + (item['price'] as double) * (item['quantity'] as int),
     );
 
-    double taxAndFees = subtotal * 0.12; // Calculate tax and fees
-    double deliveryCost = 5.0; // Fixed delivery cost
-    double total = subtotal + taxAndFees + deliveryCost; // Total calculation
+    double taxAndFees = subtotal * 0.12;
+    double deliveryCost = 5.0;
+    double total = subtotal + taxAndFees + deliveryCost;
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -102,7 +103,7 @@ class _CartScreenState extends State<CartScreen> {
             SizedBox(height: 16),
             ElevatedButton(
               onPressed: () {
-                // Handle checkout logic
+                _showCheckoutDialog(context, total);
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.orange,
@@ -119,6 +120,154 @@ class _CartScreenState extends State<CartScreen> {
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  void _showSuccessDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          backgroundColor: Colors.white,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20),
+          ),
+          title: Text(
+            'Success',
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+          ),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Lottie.asset('assets/lotties/success.json'),
+              SizedBox(height: 10),
+              Text(
+                'Successful payment!',
+                style: TextStyle(fontSize: 16),
+                textAlign: TextAlign.center,
+              ),
+            ],
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pushAndRemoveUntil(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) =>
+                          HomeScreen()), 
+                  (_) => false, 
+                ); 
+              },
+              style: TextButton.styleFrom(
+                foregroundColor: Colors.white,
+                backgroundColor: Colors.green, 
+              ),
+              child: Text('OK'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  void _showCheckoutDialog(BuildContext context, double total) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          backgroundColor: Colors.white,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20), 
+          ),
+          title: Text('Checkout Receipt',
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: [
+                for (var item in cartItems)
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 4.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          '${item['title']} (x${item['quantity']})',
+                          style: TextStyle(color: Colors.black, fontSize: 16),
+                        ),
+                        Text(
+                          '\$${((item['price'] as double) * (item['quantity'] as int)).toStringAsFixed(2)}',
+                          style: TextStyle(color: Colors.black, fontSize: 16),
+                        ),
+                      ],
+                    ),
+                  ),
+                Divider(thickness: 1, height: 32), 
+                _buildTotalRow(
+                    'Subtotal',
+                    total -
+                        (total * 0.12) -
+                        5.0), 
+                _buildTotalRow('Tax and Fees', total * 0.12), 
+                _buildTotalRow('Delivery Cost', 5.00), 
+                Divider(thickness: 1, height: 32), 
+                Text(
+                  'Total: \$${total.toStringAsFixed(2)}',
+                  style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black),
+                ),
+              ],
+            ),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop(); 
+              },
+              style: TextButton.styleFrom(
+                foregroundColor: Colors.white,
+                backgroundColor:
+                    Colors.red, 
+              ),
+              child: Text('Cancel'),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop(); 
+                print('Purchase Completed');
+                _showSuccessDialog(context); 
+              },
+              style: TextButton.styleFrom(
+                foregroundColor: Colors.white,
+                backgroundColor:
+                    Colors.green, 
+              ),
+              child: Text('Buy'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  Widget _buildTotalRow(String label, double amount) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 4.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(
+            label,
+            style: TextStyle(color: Colors.black, fontSize: 16),
+          ),
+          Text(
+            '\$${amount.toStringAsFixed(2)}',
+            style: TextStyle(color: Colors.black, fontSize: 16),
+          ),
+        ],
       ),
     );
   }

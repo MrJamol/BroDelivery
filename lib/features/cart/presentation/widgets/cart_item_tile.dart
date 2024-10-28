@@ -9,7 +9,7 @@ class CartItemTile extends StatelessWidget {
   final int quantity;
   final VoidCallback onIncrement;
   final VoidCallback onDecrement;
-  final Function(int)? onQuantityChanged; // Callback for quantity change
+  final Function(int)? onQuantityChanged; 
   final VoidCallback? onRemove;
 
   const CartItemTile({
@@ -21,7 +21,7 @@ class CartItemTile extends StatelessWidget {
     required this.quantity,
     required this.onIncrement,
     required this.onDecrement,
-    this.onQuantityChanged, // Optional callback for quantity changes
+    this.onQuantityChanged, 
     this.onRemove,
   });
 
@@ -31,9 +31,8 @@ class CartItemTile extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: Row(
         children: [
-          // Rounded Image with ClipRRect
           ClipRRect(
-            borderRadius: BorderRadius.circular(12.0), // Rounded corners
+            borderRadius: BorderRadius.circular(12.0), 
             child: Image.asset(
               imagePath,
               width: 60,
@@ -59,7 +58,6 @@ class CartItemTile extends StatelessWidget {
                         overflow: TextOverflow.ellipsis,
                       ),
                     ),
-                    // 'X' button, only shown if onRemove is provided
                     if (onRemove != null)
                       IconButton(
                         icon: const Icon(Icons.close, color: Colors.red),
@@ -92,16 +90,14 @@ class CartItemTile extends StatelessWidget {
                   ),
                 ),
               ),
-              const SizedBox(width: 8), // Space between buttons
-              // Editable quantity field
+              const SizedBox(width: 8), 
               SizedBox(
-                width: 40, // Set a fixed width for the input
+                width: 30, 
                 child: TextField(
                   keyboardType: TextInputType.number,
                   textAlign: TextAlign.center,
                   controller: TextEditingController(text: quantity.toString()),
                   onChanged: (value) {
-                    // Parse input and update the quantity
                     int? newQuantity = int.tryParse(value);
                     if (newQuantity != null && newQuantity >= 0) {
                       if (onQuantityChanged != null) {
@@ -110,12 +106,12 @@ class CartItemTile extends StatelessWidget {
                     }
                   },
                   decoration: const InputDecoration(
-                    border: InputBorder.none, // No border
-                    hintText: '0', // Optional hint text
+                    border: InputBorder.none, 
+                    hintText: '0', 
                   ),
                 ),
               ),
-              const SizedBox(width: 8), // Space between buttons
+              const SizedBox(width: 8), 
               GestureDetector(
                 onTap: onIncrement,
                 child: Container(

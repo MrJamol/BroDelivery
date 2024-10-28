@@ -1,4 +1,3 @@
-// bloc/restaurant_state.dart
 import 'package:equatable/equatable.dart';
 
 class RestaurantState extends Equatable {

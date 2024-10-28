@@ -1,6 +1,7 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:food_delivery/core/constants/colors/app_colors.dart';
+import 'package:food_delivery/features/home/persentation/screen/home_screen.dart';
 
 class VerificationScreen extends StatefulWidget {
   const VerificationScreen({super.key});
@@ -20,12 +21,12 @@ class _VerificationScreenState extends State<VerificationScreen> {
   @override
   void initState() {
     super.initState();
-    generatedCode = _generate4DigitCode(); // Generate the code initially
+    generatedCode = _generate4DigitCode(); 
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _focusNodes[0]
-          .requestFocus(); // Set focus on the first field after the frame is built
-      _showGeneratedCodeSnackbar(); // Show the custom Snackbar after the screen is built
+          .requestFocus(); 
+      _showGeneratedCodeSnackbar(); 
     });
   }
 
@@ -53,20 +54,19 @@ class _VerificationScreenState extends State<VerificationScreen> {
   }
 
   void _clearFields() {
-    // Clear all input fields
     for (var controller in _controllers) {
       controller.clear();
     }
-    _focusNodes[0].requestFocus(); // Refocus the first field
+    _focusNodes[0].requestFocus(); 
   }
 
   void _verifyCode() {
     String enteredCode =
         _controllers.map((controller) => controller.text).join();
     if (enteredCode == generatedCode) {
-      _clearFields(); // Clear fields on successful verification
+      _clearFields(); 
       Navigator.push(
-          context, MaterialPageRoute(builder: (_) => SuccessScreen()));
+          context, MaterialPageRoute(builder: (_) => HomeScreen()));
     } else {
       setState(() {
         snackbarMessage = 'Incorrect code. Please try again!';
@@ -119,9 +119,9 @@ class _VerificationScreenState extends State<VerificationScreen> {
                     TextButton(
                       onPressed: () {
                         generatedCode =
-                            _generate4DigitCode(); // Regenerate code
-                        _showGeneratedCodeSnackbar(); // Show custom Snackbar with new code
-                        _clearFields(); // Clear input fields on resend
+                            _generate4DigitCode(); 
+                        _showGeneratedCodeSnackbar(); 
+                        _clearFields(); 
                       },
                       child: Text(
                         "Please resend",
@@ -133,7 +133,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
               ],
             ),
           ),
-          if (showCustomSnackbar) // Custom Snackbar
+          if (showCustomSnackbar) 
             Positioned(
               left: 16,
               right: 16,
@@ -143,7 +143,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
                   padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
                   decoration: BoxDecoration(
                     color:  snackbarMessage == 'Incorrect code. Please try again!'
-              ? Colors.red // Red for incorrect code
+              ? Colors.red 
               : Colors.green,
                     borderRadius: BorderRadius.circular(16),
                   ),
@@ -169,7 +169,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
         keyboardType: TextInputType.number,
         maxLength: 1,
         textAlign: TextAlign.center,
-        cursorColor: AppColors.instance.kPrimary, // Set cursor color
+        cursorColor: AppColors.instance.kPrimary,
         style: TextStyle(color: AppColors.instance.kPrimary, fontSize: 24),
         decoration: InputDecoration(
           counterText: "",
@@ -184,15 +184,13 @@ class _VerificationScreenState extends State<VerificationScreen> {
         ),
         onChanged: (value) {
           if (value.isNotEmpty) {
-            // Move to the next field if a digit is entered
             if (index < 3) {
               _focusNodes[index + 1].requestFocus();
             } else {
-              _focusNodes[index].unfocus(); // Unfocus the last field
-              _verifyCode(); // Verify the code when all fields are filled
+              _focusNodes[index].unfocus(); 
+              _verifyCode(); 
             }
           } else if (index > 0) {
-            // Move to the previous field if backspace is pressed
             _focusNodes[index - 1].requestFocus();
           }
         },
@@ -201,16 +199,3 @@ class _VerificationScreenState extends State<VerificationScreen> {
   }
 }
 
-class SuccessScreen extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: Text(
-          'Success! Verification code is correct.',
-          style: TextStyle(fontSize: 24, color: Colors.green),
-        ),
-      ),
-    );
-  }
-}

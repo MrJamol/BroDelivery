@@ -50,7 +50,7 @@ class HomeScreen extends StatelessWidget {
         leading: Padding(
           padding: const EdgeInsets.all(8.0),
           child: GestureDetector(
-            onTap: drawerController.toggleDrawer, // Opens the drawer
+            onTap: drawerController.toggleDrawer, 
             child: Container(
               width: 45,
               height: 45,

@@ -15,7 +15,6 @@ class CartState extends Equatable {
     required this.total,
   });
 
-  // Initial state with empty values
   factory CartState.initial() {
     return const CartState(
       cartItems: [],
@@ -29,7 +28,6 @@ class CartState extends Equatable {
   @override
   List<Object> get props => [cartItems, subtotal, tax, delivery, total];
 
-  // CopyWith method for immutability
   CartState copyWith({
     List<dynamic>? cartItems,
     double? subtotal,

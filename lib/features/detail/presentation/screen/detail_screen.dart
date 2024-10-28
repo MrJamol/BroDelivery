@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:food_delivery/core/constants/colors/app_colors.dart';
-import 'package:food_delivery/features/cart/presentation/bloc/cart_bloc.dart';
-import 'package:food_delivery/features/cart/presentation/bloc/cart_event.dart';
 import 'package:food_delivery/features/cart/presentation/screen/cart_screen.dart';
 import 'package:food_delivery/features/detail/presentation/bloc/detail_bloc.dart';
 import 'package:food_delivery/features/detail/presentation/bloc/detail_state.dart';
-import 'package:food_delivery/features/detail/presentation/widget/add_ones.dart';
 import 'package:food_delivery/features/home/persentation/widget/restourant_card.dart';
 
 class DetailScreen extends StatefulWidget {
@@ -38,21 +35,20 @@ class DetailScreen extends StatefulWidget {
 }
 
 class _DetailScreenState extends State<DetailScreen> {
-  bool isHeartFilled = false; // Heart state (unfilled by default)
-  int quantity = 1; // State variable for quantity
+  bool isHeartFilled = false;
+  int quantity = 1; 
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.instance.white,
-      body: BlocBuilder<ItemDetailBloc, ItemDetailState>(
+      body: BlocBuilder<DetailBloc, DetailState>(
         builder: (context, state) {
           return Stack(
             children: [
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // Container to properly position the image with padding
                   Container(
                     padding: const EdgeInsets.symmetric(
                         vertical: 40, horizontal: 16),
@@ -93,7 +89,7 @@ class _DetailScreenState extends State<DetailScreen> {
                             onTap: () {
                               setState(() {
                                 isHeartFilled =
-                                    !isHeartFilled; // Toggle heart state
+                                    !isHeartFilled; 
                               });
                             },
                             child: Container(
@@ -104,8 +100,8 @@ class _DetailScreenState extends State<DetailScreen> {
                               padding: const EdgeInsets.all(8),
                               child: Icon(
                                 isHeartFilled
-                                    ? Icons.favorite // Filled heart
-                                    : Icons.favorite_border, // Outlined heart
+                                    ? Icons.favorite 
+                                    : Icons.favorite_border, 
                                 color: Colors.white,
                               ),
                             ),
@@ -120,13 +116,11 @@ class _DetailScreenState extends State<DetailScreen> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        // Restaurant Name
                         Text(
                           widget.restaurantName,
                           style: const TextStyle(
                               fontSize: 24, fontWeight: FontWeight.bold),
                         ),
-                        // Rating Row
                         Row(
                           children: [
                             const Icon(Icons.star,
@@ -144,7 +138,6 @@ class _DetailScreenState extends State<DetailScreen> {
                             )
                           ],
                         ),
-                        // Price and Quantity Control
                         Row(
                           children: [
                             Text(
@@ -153,7 +146,7 @@ class _DetailScreenState extends State<DetailScreen> {
                                   TextStyle(color: AppColors.instance.kPrimary),
                             ),
                             Text(
-                              '${widget.price}', // Display total price
+                              '${widget.price}', 
                               style: TextStyle(
                                   fontSize: 30,
                                   fontWeight: FontWeight.bold,
@@ -163,13 +156,12 @@ class _DetailScreenState extends State<DetailScreen> {
                               width: 10,
                             ),
                             Text('per pc'),
-                            Spacer(), // Space between price and quantity controls
-                            // Minus Button
+                            Spacer(), 
                             GestureDetector(
                               onTap: () {
                                 setState(() {
                                   if (quantity > 1) {
-                                    quantity--; // Decrease quantity
+                                    quantity--; 
                                   }
                                 });
                               },
@@ -178,28 +170,27 @@ class _DetailScreenState extends State<DetailScreen> {
                                   color: AppColors.instance.white,
                                   border: Border.all(
                                       color: AppColors.instance.kPrimary,
-                                      width: 2), // Set border color here
+                                      width: 2), 
                                   shape: BoxShape.circle,
                                 ),
                                 padding: const EdgeInsets.all(10),
                                 child: Icon(
                                   Icons.remove,
                                   color: AppColors.instance
-                                      .kPrimary, // Change icon color if desired
+                                      .kPrimary, 
                                 ),
                               ),
                             ),
-                            const SizedBox(width: 8), // Space between buttons
+                            const SizedBox(width: 8), 
                             Text(
                               '$quantity',
                               style: TextStyle(fontSize: 25),
                             ),
-                            const SizedBox(width: 8), // Space between buttons
-                            // Plus Button
+                            const SizedBox(width: 8), 
                             GestureDetector(
                               onTap: () {
                                 setState(() {
-                                  quantity++; // Increase quantity
+                                  quantity++; 
                                 });
                               },
                               child: Container(
@@ -217,15 +208,13 @@ class _DetailScreenState extends State<DetailScreen> {
                           ],
                         ),
                         const SizedBox(
-                            height: 8), // Space between price and description
-                        // Description
+                            height: 8), 
                         Text(
-                          widget.description, // Display description
+                          widget.description, 
                           style: const TextStyle(
                               fontSize: 16, color: Colors.black87),
                         ),
                         const SizedBox(height: 16),
-                        // Free Delivery Info
                         Text(
                           widget.freeDelivery
                               ? 'Free Delivery'
@@ -234,13 +223,11 @@ class _DetailScreenState extends State<DetailScreen> {
                               fontSize: 28, color: Colors.orange),
                         ),
                         const SizedBox(height: 8),
-                        // Preparation Time
                         Text(
                           'Preparation Time: ${widget.prepTime[0]}-${widget.prepTime[1]} mins',
                           style: const TextStyle(color: Colors.grey),
                         ),
                         const SizedBox(height: 16),
-                        // Category Chips
                         Wrap(
                           spacing: 3,
                           runSpacing: 3,
@@ -273,26 +260,24 @@ class _DetailScreenState extends State<DetailScreen> {
                               ),
                             ),
                             onPressed: () {
-                              // Create the cart item data directly
                               final cartItem = {
                                 'title': widget.restaurantName,
                                 'imagePath': widget.imagePath,
                                 'description': widget.description,
                                 'price': widget.price *
                                     quantity
-                                        .toDouble(), // Ensure `price` is in `double` format
+                                        .toDouble(), 
                                 'quantity':
-                                    quantity, // Include the quantity if needed
+                                    quantity, 
                               };
                               print(cartItem);
-                              // Navigate to CartScreen and pass the cart item as a list
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
                                   builder: (context) => CartScreen(
                                       newCartItems: [
                                         cartItem
-                                      ]), // Pass as a list
+                                      ]), 
                                 ),
                               );
                             },

@@ -6,7 +6,7 @@ class AddOnTile extends StatelessWidget {
   final bool selected;
   final VoidCallback onSelected;
 
-  AddOnTile({required this.name, required this.price, required this.selected, required this.onSelected});
+  const AddOnTile({super.key, required this.name, required this.price, required this.selected, required this.onSelected});
 
   @override
   Widget build(BuildContext context) {

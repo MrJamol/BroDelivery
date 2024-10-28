@@ -1,9 +1,9 @@
-abstract class ItemDetailEvent {}
+abstract class DetailEvent {}
 
-class AddToCart extends ItemDetailEvent {}
-class IncreaseQuantity extends ItemDetailEvent {}
-class DecreaseQuantity extends ItemDetailEvent {}
-class ToggleAddon extends ItemDetailEvent {
+class AddToCart extends DetailEvent {}
+class IncreaseQuantity extends DetailEvent {}
+class DecreaseQuantity extends DetailEvent {}
+class ToggleAddon extends DetailEvent {
   final String addon;
   ToggleAddon(this.addon);
 }

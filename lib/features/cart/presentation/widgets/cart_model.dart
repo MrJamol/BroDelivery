@@ -1,7 +1,7 @@
 import 'package:hive/hive.dart';
 
 
-@HiveType(typeId: 0) // Unique ID for the CartItem type
+@HiveType(typeId: 0) 
 class CartItem {
   @HiveField(0)
   final String imagePath;
